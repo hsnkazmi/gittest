@@ -11,24 +11,30 @@ class TabBarDemo extends StatelessWidget {
   Widget build(BuildContext context) {
     var ktabs = <Tab>[
       Tab(
-        icon: Icon(Icons.sd_card),
+        icon: Icon(Icons.vertical_align_bottom),
       ),
       Tab(
-        icon: Icon(Icons.ac_unit),
+        icon: Icon(Icons.swap_horizontal_circle),
       ),
       Tab(
-        icon: Icon(Icons.ac_unit),
+        icon: Icon(Icons.grid_on),
       ),
+      Tab(
+        text: "Mixed",
+      )
     ];
     var ktabview = <Widget>[
       Center(
-        child: Text("data"),
+        child: horizental_list(),
       ),
       Center(
-        child: Text("data"),
+        child: vertical_list(),
       ),
       Center(
-        child: Text("data"),
+        child: grid_layout(),
+      ),
+      Center(
+        child: Mixins(listgenrate(10)),
       )
     ];
     return MaterialApp(
@@ -44,22 +50,113 @@ class TabBarDemo extends StatelessWidget {
   }
 }
 
-/*  
- one old way
- home: DefaultTabController(
-          length: 3,
-          child: Scaffold(
-            appBar: AppBar(
-              bottom: TabBar(tabs: [
-                Text("1"),
-                Text("2"),
-                Text("3"),
-              ]),
+class horizental_list extends StatelessWidget {
+  const horizental_list({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView(
+        children: <Widget>[
+          for (int i = 0; i <= 3; i++)
+            ListTile(
+              title: Text("title"),
+              leading: Icon(Icons.ac_unit),
             ),
-            body: TabBarView(children: [
-              Text("1"),
-              Text("2"),
-              Text("3"),
-            ]),
-          )),
-    */
+          Container(
+            height: 40,
+            margin: EdgeInsets.all(10),
+            child: Center(child: Text("data")),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.00),
+                color: Colors.green),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class vertical_list extends StatelessWidget {
+  const vertical_list({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      children: List.generate(10, (inxex) {
+        return Center(
+          child: Container(
+              alignment: Alignment.center,
+              height: 200.99,
+              width: 200.99,
+              child: Text("grid $inxex"),
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.00),
+                  color: Colors.amberAccent)),
+        );
+      }),
+    );
+  }
+}
+
+class grid_layout extends StatelessWidget {
+  const grid_layout({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      children: List.generate(10, (inxex) {
+        return Container(
+            alignment: Alignment.center,
+            child: Text("grid $inxex"),
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.00),
+                color: Colors.amberAccent));
+      }),
+    );
+  }
+}
+
+class Mixins extends StatelessWidget {
+  final List<item> atoms;
+  Mixins(this.atoms);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView.builder(
+        itemCount: atoms.length,
+        itemBuilder: (BuildContext context, int index) {
+          var item = atoms[index];
+          if (item is headingitems) {
+            return Text("messageitems $index");
+          } else
+            return Text("heading $index");
+        },
+      ),
+    );
+  }
+}
+
+abstract class item {}
+
+class headingitems extends item {
+  String headingitem;
+  headingitems(this.headingitem);
+}
+
+class messageitems extends item {
+  String messageitem;
+  messageitems(this.messageitem);
+}
+
+List<item> listgenrate(int count) {
+  return List<item>.generate(count, (index) {
+    return index % 3 == 0
+        ? headingitems("headingitem $index")
+        : messageitems("messageitem $index");
+  });
+}
