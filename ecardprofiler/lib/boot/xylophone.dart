@@ -5,19 +5,14 @@ class xylophone extends StatelessWidget {
   var color;
   @override
   Widget build(BuildContext context) {
-    Function music;
-    var a;
     colorbar(color, String fname) {
       return Expanded(
         child: FlatButton(
+          color: color,
           onPressed: () {
             final audioPlayer = AudioCache();
-
             audioPlayer.play('note$fname.wav');
           },
-          child: Container(
-            color: color,
-          ),
         ),
       );
     }
@@ -27,12 +22,13 @@ class xylophone extends StatelessWidget {
         title: Text("xylophone"),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           colorbar(Colors.green, '1'),
           colorbar(Colors.lightBlue, '2'),
           colorbar(Colors.red, '3'),
           colorbar(Colors.yellow, '4'),
-          colorbar(Colors.purple, '1'),
+          colorbar(Colors.yellowAccent, '1'),
         ],
       ),
     );

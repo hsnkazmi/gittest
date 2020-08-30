@@ -7,6 +7,7 @@ import 'package:ecardprofiler/boot/widgatcontainer.dart';
 import 'package:ecardprofiler/boot/dice.dart';
 import 'package:ecardprofiler/boot/englishlib.dart';
 import 'package:ecardprofiler/boot/xylophone.dart';
+import 'package:ecardprofiler/boot/questions.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,7 +26,9 @@ class MyApp extends StatelessWidget {
         'cotainerwidg': (context) => widgetcontainer(),
         'dice': (context) => dice(),
         'engwords': (context) => engword(),
-        'xylophone': (context) => xylophone()
+        'xylophone': (context) => xylophone(),
+        'qanswers': (context) => Qanswers()
+
         //'myprofile': (context) => MyHome()
       },
     );
@@ -68,7 +71,8 @@ class Btns extends StatelessWidget {
               pagelink('cotainerwidg', 'Container - Widget'),
               pagelink('dice', 'Random Dice'),
               pagelink('engwords', 'Englis words'),
-              pagelink('xylophone', 'xylophone')
+              pagelink('xylophone', 'xylophone'),
+              pagelink('qanswers', 'TestApp'),
             ],
           ),
         ),
