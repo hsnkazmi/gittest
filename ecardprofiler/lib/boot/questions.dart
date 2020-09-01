@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ecardprofiler/boot/questionsbank.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Qanswers extends StatefulWidget {
   Qanswers({Key key}) : super(key: key);
@@ -8,30 +10,39 @@ class Qanswers extends StatefulWidget {
 }
 
 class _QanswersState extends State<Qanswers> {
-  List<Icon> icns = [
-    Icon(
-      Icons.check,
-      color: Colors.blue,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    )
-  ];
+  List<Icon> icns = [];
+  Qbank qb = Qbank();
   @override
   Widget build(BuildContext context) {
+    chkAnser(bool answer) {
+      if (qb.nextAnswer() == answer) {
+        icns.add(
+          Icon(
+            Icons.check,
+            color: Colors.blue,
+          ),
+        );
+      } else {
+        icns.add(
+          Icon(
+            Icons.close,
+            color: Colors.blue,
+          ),
+        );
+      }
+      setState(() {
+        if (qb.showdiolog = true) {
+          Alert(
+                  context: context,
+                  title: "Questions Ended",
+                  desc: "RFLUTTER Plugin")
+              .show();
+          icns.clear();
+        }
+        qb.setQnumber();
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Question and Answers'),
@@ -44,24 +55,24 @@ class _QanswersState extends State<Qanswers> {
             Expanded(
               child: Center(
                   child: Text(
-                'hers comes questions',
+                qb.nextQuestion(),
                 style: TextStyle(fontSize: 25),
               )),
             ),
             FlatButton(
               padding: EdgeInsets.all(22),
               onPressed: () {
-                setState(() {
-                  icns.removeLast();
-                });
+                chkAnser(true);
               },
               color: Colors.green,
-              child: Text("yes"),
+              child: Text("True"),
             ),
             FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                chkAnser(false);
+              },
               color: Colors.red,
-              child: Text("No"),
+              child: Text("False"),
             ),
             Row(
               children: icns,

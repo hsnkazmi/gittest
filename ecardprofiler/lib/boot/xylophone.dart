@@ -8,6 +8,7 @@ class xylophone extends StatelessWidget {
     colorbar(color, String fname) {
       return Expanded(
         child: FlatButton(
+          child: Spacer(),
           color: color,
           onPressed: () {
             final audioPlayer = AudioCache();
